@@ -1,12 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useUser } from "../../contexts/userContext";
-
+import useHook from "./useHook";
 const Header = () => {
+  const { languages, handleChangeLanguages } = useHook();
+  const option = ["en", "vi"];
   const { t } = useTranslation();
-  const { user, logout } = useUser(); // Sử dụng hook useUser để lấy trạng thái người dùng và hàm logout
-
   return (
     <header className="bg-gray-800 text-white py-4">
       <div className="container mx-auto px-4 flex justify-between items-center">
@@ -28,27 +27,36 @@ const Header = () => {
           </a>
         </nav>
         <div className="flex space-x-4">
-          {!user ? ( // Kiểm tra nếu người dùng chưa đăng nhập
-            <>
-              <Link to="/sign-in">
-                <button className="btn btn-outline btn-primary hidden md:inline-block">
-                  {t("sgin-in")}
-                </button>
-              </Link>
-              <Link to="/sign-up">
-                <button className="btn btn-primary">{t("sign-up")}</button>
-              </Link>
-            </>
-          ) : (
-            <>
-              {" "}
-              {/* Hiển thị tên người dùng và nút "Đăng xuất" nếu đã đăng nhập */}
-              <span className="mr-4">{user.name}</span>
-              <button onClick={logout} className="btn btn-primary">
-                {t("logout")}
-              </button>
-            </>
-          )}
+          <Link to="/sign-in">
+            <button className="btn btn-outline btn-primary hidden md:inline-block">
+              {t("sgin-in")}
+            </button>
+          </Link>
+          <Link to="/sign-up">
+            <button className="btn btn-primary">{t("sign-up")}</button>
+          </Link>
+        </div>
+        <div className="dropdown dropdown-bottom">
+          <div tabIndex={0} role="button" className="btn m-1">
+            {languages}
+          </div>
+          <ul
+            tabIndex={0}
+            className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+          >
+            {option.map((option) => (
+              <li>
+                <a
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleChangeLanguages(option);
+                  }}
+                >
+                  {option}
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
         <div className="md:hidden flex items-center">
           <button className="mobile-menu-button">
@@ -70,27 +78,14 @@ const Header = () => {
           <a href="#" className="hover:text-gray-400">
             {t("contact")}
           </a>
-          {!user ? ( // Kiểm tra nếu người dùng chưa đăng nhập
-            <>
-              <Link to="/sign-in">
-                <button className="btn btn-outline btn-primary hidden md:inline-block">
-                  {t("sgin-in")}
-                </button>
-              </Link>
-              <Link to="/sign-up">
-                <button className="btn btn-primary">{t("sign-up")}</button>
-              </Link>
-            </>
-          ) : (
-            <>
-              {" "}
-              {/* Hiển thị tên người dùng và nút "Đăng xuất" nếu đã đăng nhập */}
-              <span className="mr-4">{user.name}</span>
-              <button onClick={logout} className="btn btn-primary">
-                {t("logout")}
-              </button>
-            </>
-          )}
+          <Link to="/sign-in">
+            <button className="btn btn-outline btn-primary hidden md:inline-block">
+              {t("sgin-in")}
+            </button>
+          </Link>
+          <Link to="/sign-up">
+            <button className="btn btn-primary">{t("sign-up")}</button>
+          </Link>
         </nav>
       </div>
     </header>
