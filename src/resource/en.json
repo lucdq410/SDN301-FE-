@@ -1,0 +1,16 @@
+{
+  "sign-up": "Register",
+  "sgin-in": "Login",
+  "home": "Home page",
+  "movie": "Movie",
+  "showtimes": "Showtimes",
+  "contact": "Contact",
+  "email": "Email",
+  "password": "Password",
+  "confirm-password": "Confirm password",
+  "not-have-an-account": "Do not have an account?",
+  "go-to-login": "Go to login",
+  "name": "Name",
+  "cancel": "Cancel",
+  "logout": "Logout"
+}
