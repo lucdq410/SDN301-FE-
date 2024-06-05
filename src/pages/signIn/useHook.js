@@ -1,11 +1,9 @@
 // signIn/useHook.js
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useUser } from "../../contexts/userContext";
 import autherServices from "../../services/autherServices";
 
 const useHook = () => {
-  const { login: loginUserContext } = useUser();
   const { login: loginService } = autherServices();
   const navigate = useNavigate();
 
