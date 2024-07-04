@@ -37,7 +37,7 @@ const autherServices = () => {
       const response = await axios.post(`${api}/login`, data);
       if (response.data.isSuccess) {
         toast.success(response.data.message);
-        navigate("/");
+        return response;
       } else {
         toast.error(response.data.message);
       }

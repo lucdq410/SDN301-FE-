@@ -2,11 +2,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import autherServices from "../../services/autherServices";
-
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/slice/user";
 const useHook = () => {
   const { login: loginService } = autherServices();
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -22,9 +23,8 @@ const useHook = () => {
   const submit = async () => {
     try {
       const response = await loginService(formData);
-      if (response.data.isSuccess) {
-        loginUserContext(response.data.user);
-        navigate("/"); // Điều hướng người dùng đến trang chủ hoặc trang mong muốn sau khi đăng nhập thành công
+      if (response) {
+        dispatch(login(response.data.data));
       } else {
         // Xử lý lỗi nếu đăng nhập không thành công
         console.error(response.data.message);
