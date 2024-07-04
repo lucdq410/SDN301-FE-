@@ -1,9 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Sidebar } from "../../layouts";
 
 const Dashboard = () => {
   return (
-    <div className="container mx-auto mt-5">
+    <div className="container mx-auto mt-5 ">
       <h1 className="text-3xl font-bold mb-4">Admin Dashboard</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <Link to="/mv/movies" className="card bg-primary text-white p-5">
