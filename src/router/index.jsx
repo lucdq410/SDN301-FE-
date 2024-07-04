@@ -1,6 +1,6 @@
 import { Route, Routes, Navigate } from "react-router-dom";
 import React from "react";
-import { HomePages, SignIn, SignUp } from "../pages";
+import { HomePages, SignIn, SignUp, Hall, HallDetail } from "../pages";
 import MovieList from "../pages/admin/MovieList";
 import MovieDetail from "../pages/movie/MovieDetail";
 import MovieForm from "../pages/admin/MovieForm";
@@ -9,6 +9,7 @@ import UserMovieDetail from "../pages/user/MovieDetail";
 import PrivateRouteAdmin from "./PrivateRouterAdmin";
 import Booking from "../pages/booking/Booking";
 import { useSelector } from "react-redux";
+import { LayoutManager } from "../layouts";
 
 const Router = () => {
   const user = useSelector((state) => state.user.user);
@@ -25,7 +26,12 @@ const Router = () => {
       {/* Route chỉ dành cho quản trị viên */}
       <Route
         path="/mv/dashboard"
-        element={<PrivateRouteAdmin roles={user?.role} page={<Dashboard />} />}
+        element={
+          <PrivateRouteAdmin
+            roles={user?.role}
+            page={<LayoutManager page={Dashboard} />}
+          />
+        }
       />
 
       {/* Các route cho quản lý phim */}
@@ -34,6 +40,11 @@ const Router = () => {
       <Route path="/mv/movies/:id" element={<MovieDetail />} />
       <Route path="/mv/movies/edit/:id" element={<MovieForm />} />
 
+      <Route path="/mv/hall" element={<LayoutManager page={Hall} />} />
+      <Route
+        path="/mv/hall/:id"
+        element={<LayoutManager page={HallDetail} />}
+      />
       {/* Route cho người dùng */}
       <Route path="/movies/:id" element={<UserMovieDetail />} />
       <Route path="/booking" element={<Booking />} />
