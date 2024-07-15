@@ -8,45 +8,29 @@ import axios from "axios";
 const SlotPicker = () => {
   const { t } = useTranslation();
   const { screening_id } = useParams();
-  const { slotPickers, loading, error } = useSlotPickers(screening_id);
+  const { slotPickers, loading, error, pickSlots } =
+    useSlotPickers(screening_id);
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [bookingConfirmed, setBookingConfirmed] = useState(false);
 
   const handleSeatClick = (slotPicker) => {
     if (!slotPicker.is_available) return;
 
-    if (selectedSeats.some((seat) => seat._id === slotPicker._id)) {
-      setSelectedSeats(
-        selectedSeats.filter((seat) => seat._id !== slotPicker._id)
-      );
-    } else {
+    const seatIndex = selectedSeats.findIndex(
+      (seat) => seat._id === slotPicker._id
+    );
+    if (seatIndex === -1) {
       setSelectedSeats([...selectedSeats, slotPicker]);
+    } else {
+      const updatedSeats = [...selectedSeats];
+      updatedSeats.splice(seatIndex, 1);
+      setSelectedSeats(updatedSeats);
     }
   };
 
   const handleBooking = async () => {
     if (selectedSeats.length === 0) return;
-
-    try {
-      const ticketData = selectedSeats.map((seat) => ({
-        slotPicker_id: seat._id,
-        user_id: "user_id_here", // Replace with actual user ID logic
-        seat_number: seat.seat_number,
-        price: seat.price,
-      }));
-
-      const response = await axios.post("/api/tickets", ticketData);
-      if (response.data.isSuccess) {
-        setBookingConfirmed(true);
-        setSelectedSeats([]);
-        // Optionally, you can update state or handle UI changes upon successful booking
-      } else {
-        // Handle error scenario if needed
-      }
-    } catch (error) {
-      console.error("Error booking tickets:", error);
-      // Handle error scenario
-    }
+    pickSlots(selectedSeats.map((seat) => seat._id));
   };
 
   if (loading) return <div>{t("loading")}</div>;
@@ -71,7 +55,11 @@ const SlotPicker = () => {
                     ? "border-blue-500"
                     : ""
                 }`}
-                onClick={() => handleSeatClick(slotPicker)}
+                onClick={(e) => {
+                  console.log("slotPicker", slotPicker);
+                  e.preventDefault();
+                  handleSeatClick(slotPicker);
+                }}
               >
                 <p className="text-center">{index + 1}</p>
               </div>
@@ -90,11 +78,22 @@ const SlotPicker = () => {
             <h2 className="text-xl font-bold mb-2">{t("selected_tickets")}</h2>
             {selectedSeats.map((seat) => (
               <div key={seat._id} className="mb-2">
-                <p>{`${t("seat_number")}: ${seat.seat_number}`}</p>
-                <p>{`${t("price")}: ${seat.price}`}</p>
+                <p>{`${t("seat_number")}: ${seat.seat_id.seat_number}`}</p>
+                <p>{`${t("price")}: ${seat.seat_id.price}`}</p>
                 {/* Add additional information as needed */}
               </div>
             ))}
+            {selectedSeats.length === 0 ? (
+              <p className="text-sm">{t("no_tickets_selected")}</p>
+            ) : (
+              <p>
+                {t("total_price")}:{" "}
+                {selectedSeats.reduce(
+                  (total, seat) => total + parseInt(seat.seat_id.price),
+                  0
+                )}
+              </p>
+            )}
             {bookingConfirmed && (
               <button className="btn btn-primary mt-2" disabled>
                 {t("booking_confirmed")}
