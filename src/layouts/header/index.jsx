@@ -7,9 +7,10 @@ import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import useHook from "./useHook";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate();
   const { languages, handleChangeLanguages, user, logoutHandler } = useHook();
   const { t } = useTranslation();
 
@@ -91,6 +92,9 @@ const Header = () => {
       />
       {user && (
         <Avatar
+          onClick={() => {
+            navigate("/profile");
+          }}
           image="https://primefaces.org/cdn/primereact/images/avatar/amyelsner.png"
           shape="circle"
         />

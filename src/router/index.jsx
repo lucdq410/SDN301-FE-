@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { HomePages, SignIn, SignUp, Hall, HallDetail } from "../pages";
+import { HomePages, SignIn, SignUp, Hall, HallDetail, Profile } from "../pages";
 import MovieList from "../pages/admin/MovieList";
 import MovieDetail from "../pages/movie/MovieDetail";
 import MovieForm from "../pages/admin/MovieForm";
@@ -68,6 +68,7 @@ const Router = () => {
         element={<LayoutManager page={SeatList} />}
       />
       {/* Route cho người dùng */}
+      <Route path="/profile" element={<Profile />} />
       <Route path="/movies/:id" element={<UserMovieDetail />} />
       <Route path="/booking" element={<Booking />} />
       <Route path="/screenings/movie/:movie_id" element={<ScreeningList />} />
