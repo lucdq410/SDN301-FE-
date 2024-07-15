@@ -5,8 +5,7 @@ const LayoutManager = ({ page: Page }) => {
   return (
     <div className="flex w-screen">
       <Sidebar />
-      <div className="p-2">
-        {" "}
+      <div className="flex flex-col flex-1 p-2">
         <Page />
       </div>
     </div>

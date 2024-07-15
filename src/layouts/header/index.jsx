@@ -1,132 +1,110 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Menubar } from "primereact/menubar";
+import { InputText } from "primereact/inputtext";
+import { Avatar } from "primereact/avatar";
+import { Badge } from "primereact/badge";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import useHook from "./useHook";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const { languages, handleChangeLanguages, user, logoutHandler } = useHook();
-  const option = ["en", "vi"];
   const { t } = useTranslation();
 
-  return (
-    <header className="bg-gray-800 text-white py-4">
-      <div className="container mx-auto px-4 flex justify-between items-center">
-        <div className="flex items-center">
-          <h1 className="text-2xl font-bold">MovieTicket</h1>
-        </div>
-        <nav className="hidden md:flex space-x-4">
-          <a href="#" className="hover:text-gray-400">
-            {t("home")}
-          </a>
-          <a href="#" className="hover:text-gray-400">
-            {t("movie")}
-          </a>
-          <a href="#" className="hover:text-gray-400">
-            {t("showtimes")}
-          </a>
-          <a href="#" className="hover:text-gray-400">
-            {t("contact")}
-          </a>
-        </nav>
-        <div className="flex space-x-4 items-center">
-          {user === null ? (
-            <>
-              <Link to="/sign-in">
-                <button className="btn btn-outline btn-primary hidden md:inline-block">
-                  {t("sign-in")}
-                </button>
-              </Link>
-              <Link to="/sign-up">
-                <button className="btn btn-primary">{t("sign-up")}</button>
-              </Link>
-            </>
-          ) : (
-            <>
-              {user?.role === "admin" && (
-                <Link to="/mv/dashboard">
-                  <button className="btn btn-outline btn-primary hidden md:inline-block">
-                    {t("Admin panel")}
-                  </button>
-                </Link>
-              )}
+  const items = [
+    {
+      label: t("home"),
+      icon: "pi pi-home",
+      command: () => {
+        window.location.href = "/";
+      },
+    },
+    {
+      label: t("movie"),
+      icon: "pi pi-video",
+      command: () => {
+        // Handle navigation to movies page
+      },
+    },
+    {
+      label: t("showtimes"),
+      icon: "pi pi-clock",
+      command: () => {
+        // Handle navigation to showtimes page
+      },
+    },
+    {
+      label: t("contact"),
+      icon: "pi pi-envelope",
+      command: () => {
+        // Handle navigation to contact page
+      },
+    },
+    user
+      ? {
+          label: t("logout"),
+          icon: "pi pi-sign-out",
+          command: () => {
+            logoutHandler();
+          },
+        }
+      : {
+          label: t("sign-in"),
+          icon: "pi pi-user-plus",
+          url: "/sign-in",
+        },
+    {
+      label: languages === "en" ? "vi" : "en",
+      icon: "pi pi-globe",
+      items: [
+        {
+          label: "English",
+          icon: "pi pi-flag",
+          command: () => handleChangeLanguages("en"),
+        },
+        {
+          label: "Tiếng Việt",
+          icon: "pi pi-flag",
+          command: () => handleChangeLanguages("vi"),
+        },
+      ],
+    },
+  ];
 
-              <button
-                className="btn btn-primary"
-                onClick={(e) => {
-                  e.preventDefault();
-                  logoutHandler();
-                }}
-              >
-                {t("logout")}{" "}
-                <FontAwesomeIcon icon={faSignOutAlt} className="ml-2" />
-              </button>
-            </>
-          )}
-          <div className="dropdown dropdown-bottom">
-            <div tabIndex={0} role="button" className="btn m-1">
-              <FontAwesomeIcon
-                icon={languages === "en" ? "vi" : "en"}
-                className="mr-2"
-              />
-              {languages}
-            </div>
-            <ul
-              tabIndex={0}
-              className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
-            >
-              {option.map((lang) => (
-                <li key={lang}>
-                  <a
-                    href="#"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleChangeLanguages(lang);
-                    }}
-                  >
-                    <FontAwesomeIcon
-                      icon={lang === "en" ? "us" : "vn"}
-                      className="mr-2"
-                    />
-                    {lang}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-        <div className="md:hidden flex items-center">
-          <button className="mobile-menu-button">
-            <i className="fas fa-bars text-2xl"></i>
-          </button>
-        </div>
-      </div>
-      <div className="mobile-menu hidden md:hidden">
-        <nav className="flex flex-col space-y-4">
-          <a href="#" className="hover:text-gray-400">
-            {t("home")}
-          </a>
-          <a href="#" className="hover:text-gray-400">
-            {t("movie")}
-          </a>
-          <a href="#" className="hover:text-gray-400">
-            {t("showtimes")}
-          </a>
-          <a href="#" className="hover:text-gray-400">
-            {t("contact")}
-          </a>
-          <Link to="/sign-in">
-            <button className="btn btn-outline btn-primary hidden md:inline-block">
-              {t("sign-in")}
-            </button>
-          </Link>
-          <Link to="/sign-up">
-            <button className="btn btn-primary">{t("sign-up")}</button>
-          </Link>
-        </nav>
-      </div>
-    </header>
+  // const start = (
+  //   <img
+  //     alt="MovieTicket Logo"
+  //     src="/path/to/your/logo.png" // Replace with your actual logo path
+  //     height="40"
+  //     className="mr-2"
+  //   />
+  // );
+
+  const end = (
+    <div className="flex align-items-center gap-2">
+      <InputText
+        placeholder={t("search")}
+        type="text"
+        className="w-8rem sm:w-auto"
+      />
+      {user && (
+        <Avatar
+          image="https://primefaces.org/cdn/primereact/images/avatar/amyelsner.png"
+          shape="circle"
+        />
+      )}
+    </div>
+  );
+
+  return (
+    <Menubar
+      model={items}
+      // start={start}
+      end={end}
+      className="bg-gray-800 text-white py-4"
+    />
   );
 };
 

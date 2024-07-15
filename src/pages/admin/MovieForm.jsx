@@ -105,20 +105,6 @@ const MovieForm = () => {
             className="input input-bordered w-full"
           />
         </div>
-        <div className={`mb-4 ${!formData.status && "input-error"}`}>
-          <label className="label">
-            <span className="label-text">{t("status")}</span>
-          </label>
-          <select
-            name="status"
-            value={formData.status}
-            onChange={handleChange}
-            className="select select-bordered w-full"
-          >
-            <option value="upcoming">{t("upcoming")}</option>
-            <option value="now_showing">{t("nowShowing")}</option>
-          </select>
-        </div>
         <button type="submit" className="btn btn-primary">
           {id ? t("update") : t("add")}
         </button>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useMovie } from "./useMovie";
 import { useTranslation } from "react-i18next";
@@ -30,7 +30,6 @@ const MovieList = () => {
             <th>{t("releaseDate")}</th>
             <th>{t("director")}</th>
             <th>{t("description")}</th>
-            <th>{t("status")}</th>
             <th>{t("actions")}</th>
           </tr>
         </thead>
@@ -51,13 +50,6 @@ const MovieList = () => {
               <td>{new Date(movie.release_date).toLocaleDateString()}</td>
               <td>{movie.director}</td>
               <td>{movie.description}</td>
-              <td>
-                {movie.status === "now_showing" ? (
-                  <span className="text-green-600">{t("nowShowing")}</span>
-                ) : (
-                  <span className="text-blue-600">{t("upcoming")}</span>
-                )}
-              </td>
               <td>
                 <div className="flex space-x-2">
                   <Link to={`/mv/movies/${movie._id}`} className="btn btn-info">

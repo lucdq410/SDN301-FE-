@@ -65,7 +65,7 @@ export const useMovieForm = () => {
       formData.poster = await uploadImage(formData.poster);
       await createMovie(formData);
     }
-    navigate("/admin/movies");
+    navigate("/mv/movies");
   };
 
   return {

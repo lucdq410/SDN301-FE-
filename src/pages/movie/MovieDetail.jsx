@@ -44,7 +44,10 @@ const MovieDetail = () => {
               <strong>{t("description")}:</strong> {movie.description}
             </p>
             {/* Update the Link to direct to the booking page */}
-            <Link to={`/booking/${id}`} className="btn btn-primary mt-4 mr-4">
+            <Link
+              to={`/screenings/movie/${id}`}
+              className="btn btn-primary mt-4 mr-4"
+            >
               {t("book_now")}
             </Link>
           </div>

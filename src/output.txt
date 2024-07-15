@@ -1,0 +1,83 @@
+Folder PATH listing for volume Data
+Volume serial number is DC7E-2C08
+D:.
+¦   App.css
+¦   App.jsx
+¦   index.css
+¦   main.jsx
+¦   output.txt
+¦   
++---assets
+¦       react.svg
+¦       
++---components
+¦   ¦   PrivateRoute.jsx
+¦   ¦   
+¦   +---MovieCard
+¦   ¦       MovieCard.jsx
+¦   ¦       
+¦   +---moviespages
+¦           MoviesPage.jsx
+¦           
++---configs
+¦       index.js
+¦       
++---contexts
+¦       AuthContext.jsx
+¦       
++---data
+¦       movies.js
+¦       
++---layouts
+¦   ¦   index.js
+¦   ¦   
+¦   +---footer
+¦   ¦       index.jsx
+¦   ¦       
+¦   +---header
+¦           index.jsx
+¦           useHook.js
+¦           
++---pages
+¦   ¦   index.js
+¦   ¦   
+¦   +---admin
+¦   ¦       Dashboard.jsx
+¦   ¦       MovieDetail.jsx
+¦   ¦       MovieForm.jsx
+¦   ¦       MovieList.jsx
+¦   ¦       useMovie.js
+¦   ¦       useMovieForm.js
+¦   ¦       
+¦   +---home
+¦   ¦       index.jsx
+¦   ¦       
+¦   +---signIn
+¦   ¦       index.jsx
+¦   ¦       useHook.js
+¦   ¦       
+¦   +---signUp
+¦           index.jsx
+¦           useHook.js
+¦           
++---redux
+¦   +---slice
+¦   ¦       languages.js
+¦   ¦       user.js
+¦   ¦       
+¦   +---store
+¦           configuration.js
+¦           
++---resource
+¦       en.json
+¦       translate.js
+¦       vi.json
+¦       
++---router
+¦       index.jsx
+¦       
++---services
+¦       autherServices.js
+¦       useMovie.js
+¦       
++---utils
